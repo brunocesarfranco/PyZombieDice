@@ -100,16 +100,17 @@ class Jogadores:
 
     #Função que pergunta o nome do jogodor para registro
     def inputJogador(self):
-
+        """
         #:return: Retorna um Jogador com nome inserido pelo usuário e uma contagem inicial de 0 cérebros.
+        """
         nome = input("Informe nome do jogador: ")
         return Jogador(nome, 0)
 
     #Função que verifica se o um jogador já está ou não cadastrado em jogadores
     def __verificarExistentes(self, jogador):
-        
+        """
         #:return: retorna um booleano indicando se existe ou não na lista de jogadores.
-
+        """
         if(jogador in self.__jogadores):
             print("\nEsse jogador já está registrado\n")
             return True
@@ -117,8 +118,9 @@ class Jogadores:
 
     #Função que atualiza um jogador, caso ele já esteja cadastrado, será solicitado um novo valor para atualização.
     def atualizarJogador(self, jogador):
-        
+        """
         #:jogador: Jogador que será atualizado.
+        """
         nome = input("Qual será o novo nome do jogador? ")
         jogadorAtualizado = Jogador(nome, 0)
         while self.__verificarExistentes(jogadorAtualizado):
@@ -126,6 +128,7 @@ class Jogadores:
         index = self.__jogadores.index(jogador)
         self.__jogadores[index] = jogadorAtualizado
 
+    #Função que solicita ao usuário a escolha de uma das opções quando o usuário tenta cadastrar um nome de jogador já existente.
     def __mesmoNome(self, jogador):
         """
         Função que solicita ao usuário a escolha de uma das opções quando o usuário tenta cadastrar um nome de jogador já existente.
@@ -149,6 +152,7 @@ class Jogadores:
             except:
                 print('\n\nPor favor, digite o número da escolha\n\n')
 
+    #Função para adicionar jogador a lista de jogadores.
     def adicionarJogadores(self):
         """
         Função para adicionar jogador a lista de jogadores.
@@ -165,6 +169,7 @@ class Jogadores:
             else:
                 continue
 
+    #Função que traz o nome e o número dos jogadores cadastrados.    
     def listarJogadores(self):
         """
         Função que traz o nome e o número dos jogadores cadastrados.
@@ -172,6 +177,7 @@ class Jogadores:
         for index, jogador in enumerate(self.__jogadores):
             print('\n'+str(index+1)+'º - '+jogador.Nome)
 
+    #Função que traz a pontuação por nome dos jogadores cadastrados
     def listarPontos(self):
         """
         Função que traz a pontuação por nome dos jogadores cadastrados
