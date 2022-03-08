@@ -1,5 +1,6 @@
 # Aluno: Bruno Cesar de Oliveira Franco
 # RA: 1112022100423
+# Curso: Analise e Desenolvimento de Sistemas
 # Professor: Galbas Milleo Filho
 # Objetivo: Implementação de jogo baseado em ZombieDice na 
 #           linguagem Python para matéria de Raciocínio Computacional PUCPR.
