@@ -24,6 +24,7 @@ class Menu:
         self.__jogadores = Jogadores()
         self.__rodada = Rodada(self.__jogadores.getJogadores())
 
+    #Função principal da partida, faz um loop de rodadas até possuir ao menos um jogador que conseguiu comer 13 ou mais cérebros.
     def __iniciarJogo(self):
         """
         Função principal da partida, faz um loop de rodadas até possuir ao menos um jogador que conseguiu comer 13 ou mais cérebros.
@@ -67,7 +68,8 @@ class Menu:
                 print('\nAté breve e volte logo :D\n')
                 print('\nDesenvolvido por: Bruno Franco\n')
                 break
-
+   
+    #Função que solicita ao usuário a esccolha entre uma das opções de adicionar ou listar jogadores, começar a partida ou sair.
     def __escolherMenu(self):
         """
         Função que solicita ao usuário a esccolha entre uma das opções de adicionar ou listar jogadores, começar a partida ou sair.
