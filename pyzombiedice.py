@@ -9,6 +9,7 @@
 from collections import namedtuple
 from distutils.command.clean import clean
 import random
+from secrets import choice
 import time
 from turtle import clear
 
@@ -183,10 +184,12 @@ class Jogadores:
                 break
             else:
                 self.__jogadores.append(jogador)
-            if(input('Deseja adicionar outro jogador? (s/n)') == 'n' or 'N' or 'Não' or 'NÃO' or 'Nao' or 'NAO'):
-                break
-            else:
-                continue
+                choiceadd = str(input("Deseja adicionar outro jogador? (s/n)"))
+                aceite = ['s','S','Sim','SIM','sim','sIM','SiM']
+                if (choiceadd in aceite):
+                    continue
+                else:
+                    break
 
     #Função que traz o nome e o número dos jogadores cadastrados.    
     def listarJogadores(self):
