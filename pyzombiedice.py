@@ -138,7 +138,7 @@ class Jogadores:
         """
         while True:
             nome = input("Informe nome do jogador: ")
-            if(nome != ""):
+            if(nome != "" and nome != " "):
                 return Jogador(nome, 0)
             else:
                 print('\nPor favor, escolha um nome válido.\n')
