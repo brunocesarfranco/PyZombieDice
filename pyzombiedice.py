@@ -8,6 +8,7 @@
 #Imports
 from collections import namedtuple
 from distutils.command.clean import clean
+from queue import Empty
 import random
 from secrets import choice
 import time
@@ -36,12 +37,21 @@ class Menu:
         self.__jogadores = Jogadores()
         self.__rodada = Rodada(self.__jogadores.getJogadores())
 
+    def _finalizarSystem(self):
+        """
+        Função que entrega mensagem para finalização do sistema
+        """    
+        print('Finalizando o sistema, aguarde ...')
+        sleepLineBreak()
+        print('----- Muito obrigado por jogar, volte logo :D -----')
+        print('--------  Desenvolvido por: Bruno Franco  --------\n')  
+
     #Função principal da partida, faz um loop de rodadas até possuir ao menos um jogador que conseguiu comer 13 ou mais cérebros.
     def __iniciarJogo(self):
         """
         Função principal da partida, faz um loop de rodadas até possuir ao menos um jogador que conseguiu comer 13 ou mais cérebros.
         """
-        print('--- Boa Jogatina! ---')
+        print('----- Boa Jogatina! -----')
         sleepLineBreak()
 
         while self.__rodada.continuarJogo():
@@ -53,11 +63,11 @@ class Menu:
         print("\n\n**************\nE o vencedor foi:")
         sleepLineBreak()
         print(vencedor.Nome,
-              "!!! Que comeu", vencedor.Cérebros, "Cérebros !!!\n")
+              "! Que comeu", vencedor.Cérebros, "Cérebros !!!")
         sleepLineBreak()
         print("Parabéns, você é o/a melhor Zumbi !!!\n\n**************")
         sleepLineBreak()
-        print("Finalizando o jogo, volte logo!\n\n**************")
+        self._finalizarSystem()
 
     #Função inicial, da ação a escolha do usuário entre adicionar ou listar jogadores, começar a partida (é necessário ao menos 2 jogadores) ou sair.
     def menu(self):
@@ -74,19 +84,20 @@ class Menu:
                 sleepLineBreak()
             elif(decisao == 3):
                 if(len(self.__jogadores.getJogadores()) <= 1):
+                    print('\n-------------------------- ATENÇÃO --------------------------')
                     print(
-                        '\nSão necessários ao menos dois jogadores para iniciar o jogo!\n')
+                        'São necessários ao menos dois jogadores para iniciar o jogo!')
                 else:
+                    print('\n------ Competidores -----')
                     for jogador in self.__jogadores.getJogadores():
                         print('Jogador:', jogador.Nome, ' | ' 'Cérebros:', jogador.Cérebros)
                     self.__iniciarJogo()
                     break
             else:
-                print('\nFinalizando o sistema, aguarde ...')
-                print('Até breve e volte logo :D')
-                print('\nDesenvolvido por: Bruno Franco\n')
+                self._finalizarSystem()
                 break
-   
+
+
     #Função que solicita ao usuário a esccolha entre uma das opções de adicionar ou listar jogadores, começar a partida ou sair.
     def __escolherMenu(self):
         """
@@ -96,13 +107,15 @@ class Menu:
         while True:
             try:
                 decisao = int(
-                    input('\n--- Menu Inicial --- \n1 - Adicionar jogadores\n2 - Listar jogadores da partida\n3 - Jogar\n4 - Sair\n\nQuero a opção número: '))
+                    input('\n----- Menu Inicial ----- \n1 - Adicionar jogadores\n2 - Listar jogadores da partida\n3 - Jogar\n4 - Sair\n\nQuero a opção número:'))
                 if(decisao >= 1 and decisao <= 4):
                     return decisao
                 else:
-                    print('\n\nPor favor, escolha uma opção válida\n\n')
+                    print('\n\n------------- ATENÇÃO -------------')
+                    print('Por favor, escolha uma opção válida\n')
             except:
-                print('\n\nPor favor, digite o número da escolha\n\n')
+                print('\n\n------------- ATENÇÃO -------------')
+                print('Por favor, digite o número da escolha\n')
 
 class Jogadores:
     """
@@ -123,8 +136,12 @@ class Jogadores:
         """
         #:return: Retorna um Jogador com nome inserido pelo usuário e uma contagem inicial de 0 cérebros.
         """
-        nome = input("Informe nome do jogador: ")
-        return Jogador(nome, 0)
+        while True:
+            nome = input("Informe nome do jogador: ")
+            if(nome != ""):
+                return Jogador(nome, 0)
+            else:
+                print('\nPor favor, escolha um nome válido.\n')
 
     #Função que verifica se o um jogador já está ou não cadastrado em jogadores
     def __verificarExistentes(self, jogador):
@@ -168,6 +185,7 @@ class Jogadores:
                 elif(decisao == 3):
                     break
                 else:
+                    print('------------- ATENÇÃO -------------')
                     print('\n\nPor favor, escolha uma opção válida\n\n')
             except:
                 print('\n\nPor favor, digite o número da escolha\n\n')
@@ -184,30 +202,36 @@ class Jogadores:
                 break
             else:
                 self.__jogadores.append(jogador)
-                choiceadd = str(input("Deseja adicionar outro jogador? (s/n)"))
-                aceite = ['s','S','Sim','SIM','sim','sIM','SiM']
-                if (choiceadd in aceite):
-                    continue
-                else:
-                    break
+                
+                while True:
+                    accept = ['S','SIM']
+                    denied = ['N','NAO']
+                    choiceadd = str(input("Deseja adicionar outro jogador? (s/n) "))
+                    if (choiceadd.upper() in denied):
+                        return False
+                    if (choiceadd.upper() in accept):
+                        break
+                    else:
+                        print('\nPor favor, insira um valor válido.')
 
     #Função que traz o nome e o número dos jogadores cadastrados.    
     def listarJogadores(self):
         """
         Função que traz o nome e o número dos jogadores cadastrados.
         """
+        print('----- Lista de Jogadores -----')
         for index, jogador in enumerate(self.__jogadores):
-            print('\n'+str(index+1)+'º - '+jogador.Nome)
+            print(str(index+1)+'º - '+jogador.Nome)
 
     #Função que traz a pontuação por nome dos jogadores cadastrados
     def listarPontos(self):
         """
         Função que traz a pontuação por nome dos jogadores cadastrados
         """
-        print('\n--- PONTUAÇÃO ATUAL ---\n')
+        print('\n----- PONTUAÇÃO ATUAL -----')
         for jogador in self.__jogadores:
             print(jogador.Nome+": "+str(jogador.Cérebros))
-
+        print('---------------------------')
 class Pontuacao:
     """
     Classe Pontuação;
@@ -445,9 +469,11 @@ class Rodada:
                 if(decisao >= 1 and decisao <= 2):
                     return decisao
                 else:
-                    print('\n\nPor favor, escolha uma opção válida\n\n')
+                    print ('\n\n------------- ATENÇÃO -------------')
+                    print('Por favor, escolha uma opção válida.\n\n')
             except:
-                print('\nPor favor, digite o número da escolha\n\n')
+                print ('\n\n------------- ATENÇÃO -------------')
+                print('Por favor, escolha um dos números abaixo.\n')
 
     #Função que verifica se o jogador atual tomou mais de dois tiros, pois caso ele tome 3 ele perderá todos os pontos.
     def __verificarVida(self, pontuacao: Pontuacao):
@@ -458,8 +484,8 @@ class Rodada:
         """
         pontuacaoTemp = pontuacao.getPontuacaoTemporaria()
         if(pontuacaoTemp["Tiros"] >= 3):
-            print("Você tomou", pontuacaoTemp["Tiros"],
-                  "tiros e perdeu todos os cérebros que comeu... x_x")
+            print("BAAANGG!! Você tomou", pontuacaoTemp["Tiros"],
+                  "tiros e perdeu todos os cérebros que comeu... |x_x|\n")
             return False
         else:
             return True
