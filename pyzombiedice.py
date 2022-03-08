@@ -227,6 +227,7 @@ class Copo:
         self.__dadosRepetir = []
         self.__dadosUtilizados = []
 
+    #Função que incrementa um dado a lista de dados que serão utilizados caso o jogador jogue novamente.
     def setDadosRepetir(self, dado):
         """
         Função que incrementa um dado a lista de dados que serão utilizados caso o jogador jogue novamente.
@@ -234,6 +235,7 @@ class Copo:
         """
         self.__dadosRepetir.append(dado)
 
+    #Função que incrementa um dado a lista de dados pontuados pelo jogador.
     def setDadosUtilizados(self, dado):
         """
         Função que incrementa um dado a lista de dados pontuados pelo jogador.
@@ -241,6 +243,7 @@ class Copo:
         """
         self.__dadosUtilizados.append(dado)
 
+    #Função que devolve os dados utilizados pelo jogador ao copo.
     def recolocarCopo(self):
         """
         Função que devolve os dados utilizados pelo jogador ao copo.
@@ -248,12 +251,14 @@ class Copo:
         self.__copo.extend(self.__dadosUtilizados)
         self.__dadosUtilizados.clear()
 
+    #Função que limpa os valores contidos na lista dadosRepetir.
     def resetDadosRepetir(self):
         """
         Função que limpa os valores contidos na lista dadosRepetir
         """
         self.__dadosRepetir.clear()
 
+    #Função que retorna os valores da lista de dadosRepetir
     def getDadosRepetir(self):
         """
         Função que retorna os valores da lista de dadosRepetir
@@ -261,6 +266,7 @@ class Copo:
         """
         return self.__dadosRepetir
 
+    #Função que retorna os todos os dados do copo
     def getCopo(self):
         """
         Função que retorna os todos os dados do copo
@@ -268,6 +274,7 @@ class Copo:
         """
         return self.__copo
 
+    #Função que recebe uma letra e retorna a palavra correspondente.
     def __traduzirFace(self, face: str):
         """
         Função que recebe uma letra e retorna a palavra correspondente.
@@ -281,6 +288,7 @@ class Copo:
         else:
             return "Tiro"
 
+    #Função que adiciona um dado Verde e suas faces ao copo
     def __dadosVerdes(self):
         """
         Função que adiciona um dado Verde e suas faces ao copo
@@ -288,6 +296,7 @@ class Copo:
         dadoVerde = Dado('Verde', 'CPCTPC')
         self.__copo.append(dadoVerde)
 
+    #Função que adiciona um dado Amarelo e suas faces ao copo
     def __dadosAmarelos(self):
         """
         Função que adiciona um dado Amarelo e suas faces ao copo
@@ -295,6 +304,7 @@ class Copo:
         dadoAmarelo = Dado('Amarelo', 'TPCTPC')
         self.__copo.append(dadoAmarelo)
 
+    #Função que adiciona um dado Vermelho e suas faces ao copo
     def __dadosVermelhos(self):
         """
         Função que adiciona um dado Vermelho e suas faces ao copo
@@ -302,6 +312,7 @@ class Copo:
         dadoVermelho = Dado('Vermelho', 'TPTCPT')
         self.__copo.append(dadoVermelho)
 
+    #Função que adiciona 6 dados Verdes, 4 dados Amarelos e 3 dados Vermelhos ao copo.
     def criarCopo(self):
         """
         Função que adiciona 6 dados Verdes, 4 dados Amarelos e 3 dados Vermelhos ao copo.
@@ -315,6 +326,7 @@ class Copo:
         for i in range(3):
             self.__dadosVermelhos()
 
+    #Função que rola um dado.
     def __rolarDado(self, dado):
         """
         Função que rola um dado.
@@ -326,6 +338,7 @@ class Copo:
               self.__traduzirFace(faceCima))
         return faceCima
 
+    #Função que retira um dado aleatorio do copo.
     def tirarDado(self):
         """
         Função que retira um dado aleatorio do copo.
@@ -336,6 +349,7 @@ class Copo:
         dado = self.__copo.pop(index)
         return dado
 
+    #Função que seleciona 3 dados que serão jogados. Estes dados serão uma combinação dos dados que rolagem Passo na jogada anterior e novos.
     def selecionarDados(self):
         """
         Função que seleciona 3 dados que serão jogados. Estes dados serão uma combinação dos dados que rolagem Passo na jogada anterior e novos.
@@ -351,6 +365,8 @@ class Copo:
         for i, dado in enumerate(selecionados):
             print(str(i+1)+'º dado tem a cor:', dado.Cor)
         return selecionados
+
+    #        Função que rola os dados e os armazena nas listas de dadosRepetir ou dadosUtilizar dependendo do que foi rolado.
 
     def jogarDados(self, dados):
         """
@@ -374,6 +390,7 @@ class Rodada:
         self.__jogadores = jogadores
         self.__copo = Copo()
 
+    #Função que repete as ações de selecionar dados e jogar dados.
     def __jogarNovamente(self):
         """
         Função que repete as ações de selecionar dados e jogar dados.
@@ -468,6 +485,7 @@ class Rodada:
                 continue
             self.__escolherOpcaoRodada(jogador, pontuacao, vencedores)
 
+    #Função que verifica se existe algum jogador que conseguiu comer 13 ou mais cérebros.
     def continuarJogo(self):
         """
         Função que verifica se existe algum jogador que conseguiu comer 13 ou mais cérebros.
@@ -479,6 +497,7 @@ class Rodada:
                 return False
         return continuar
 
+    #Função que encontra o jogador que comeu mais cérebros, caso haja empate, haverá uma rodada desempate entre os jogadores com maior score.
     def buscarVencedor(self, jogadores):
         """
         Função que encontra o jogador que comeu mais cérebros, caso haja empate, haverá uma rodada desempate entre os jogadores com maior score.
