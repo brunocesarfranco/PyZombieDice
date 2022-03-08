@@ -8,8 +8,6 @@
 
 #Imports
 from collections import namedtuple
-from distutils.command.clean import clean
-from queue import Empty
 import random
 from secrets import choice
 import time
@@ -117,7 +115,6 @@ class Menu:
             except:
                 print('\n\n------------- ATENÇÃO -------------')
                 print('Por favor, digite o número da escolha\n')
-
 class Jogadores:
     """
     Classe Jogadores;
@@ -269,7 +266,6 @@ class Pontuacao:
             jogador.Nome, (jogador.Cérebros+self.__pontuacaoTemp["Cérebros"]))
         index = jogadores.index(jogador)
         jogadores[index] = jogadorAtualizado
-
 class Copo:
     """
     Classe Copo;
@@ -436,7 +432,6 @@ class Copo:
                 self.setDadosUtilizados(dado)
         sleepLineBreak()
         return rolagem
-
 class Rodada:
     """
     Classe rodada;
@@ -576,7 +571,6 @@ class Rodada:
             vencedor = vencedores[0]
         return vencedor
     pass
-
 
 #Inicio do Programa
 print("\nBem-vindo ao ZombiDice, divirta-se!")
