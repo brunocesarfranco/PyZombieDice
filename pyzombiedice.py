@@ -193,6 +193,7 @@ class Pontuacao:
             "Tiros": 0
         }
 
+    #Função que acrescenta Cérebros ou Tiros na pontuação temporaria da rodada.
     def pontuacaoTemporaria(self, face: str, ):
         """
         Função que acrescenta Cérebros ou Tiros na pontuação temporaria da rodada.
@@ -203,9 +204,11 @@ class Pontuacao:
         elif(face == "T"):
             self.__pontuacaoTemp["Tiros"] += 1
 
+    #Função que pega pontuação temporaria.
     def getPontuacaoTemporaria(self):
         return self.__pontuacaoTemp
 
+    #Função que atualiza a pontuação de um jogador.
     def pontuarRodada(self, jogador, jogadores):
         """
         Função que atualiza a pontuação de um jogador.
