@@ -2,7 +2,7 @@
 # RA: 1112022100423
 # Curso: Analise e Desenolvimento de Sistemas
 # Professor: Galbas Milleo Filho
-# Objetivo: Implementação de jogo baseado em ZombieDice na 
+# Objetivo: Implementação final do jogo baseado em ZombieDice na 
 #           linguagem Python para matéria de Raciocínio Computacional PUCPR.
 #Repositório: https://github.com/brunocesarfranco/PyZombieDice
 
