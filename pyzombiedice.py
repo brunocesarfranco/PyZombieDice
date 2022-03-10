@@ -9,22 +9,24 @@
 #Imports
 from collections import namedtuple
 import random
-from secrets import choice
 import time
-from turtle import clear
 
-#Uma função que adiciona um delay no código e uma quebra de linha, para melhorar a usabilidade.
-def sleepLineBreak(seconds=1.2):
-    #:seconds: Valor número que representa a quantidade de segundos para espera.
-    time.sleep(seconds)
-    print('')
-
+#Var mensagem inicio de jogo
+Startmsg = print("\nBem-vindo ao ZombiDice, divirta-se!")
 #Var Jogador
 Jogador = namedtuple("Jogador", ["Nome", "Cérebros"])
-
 #Var Dado
 Dado = namedtuple("Dado", ["Cor", "Faces"])
 
+class Delay:
+    """
+    Classe Delay;
+    """
+    #Uma função que adiciona um delay no código e uma quebra de linha, para melhorar a usabilidade.
+    def sleepLineBreak(seconds=1.2):
+    #:seconds: Valor número que representa a quantidade de segundos para espera.
+        time.sleep(seconds)
+        print('')
 class Menu:
     """
     Classe Menu;
@@ -36,22 +38,32 @@ class Menu:
         self.__jogadores = Jogadores()
         self.__rodada = Rodada(self.__jogadores.getJogadores())
 
-    def _finalizarSystem(self):
+    def _close(self):
         """
         Função que entrega mensagem para finalização do sistema
         """    
         print('Finalizando o sistema, aguarde ...')
-        sleepLineBreak()
+        Delay.sleepLineBreak()
         print('----- Muito obrigado por jogar, volte logo :D -----')
-        print('--------  Desenvolvido por: Bruno Franco  --------\n')  
+        print('--------  Desenvolvido por: Bruno Franco  --------\n')
 
+    def _rules(self):
+        """
+        Função que apresenta as regras do jogo
+        """  
+        print('------ REGRAS DO JOGO ------'
+              '\n- Insira no minimo 2 jogadores;\n'
+              '- Siga as instruções durante o jogo;\n'
+              '- Caso acumule 3 espingardas você passa a vez;\n'
+              '- Vence quem alcançar 13 cérebros primeiro!')
+        
     #Função principal da partida, faz um loop de rodadas até possuir ao menos um jogador que conseguiu comer 13 ou mais cérebros.
     def __iniciarJogo(self):
         """
         Função principal da partida, faz um loop de rodadas até possuir ao menos um jogador que conseguiu comer 13 ou mais cérebros.
         """
         print('----- Boa Jogatina! -----')
-        sleepLineBreak()
+        Delay.sleepLineBreak()
 
         while self.__rodada.continuarJogo():
             self.__rodada.jogarRodada(self.__jogadores.getJogadores())
@@ -60,13 +72,13 @@ class Menu:
             self.__jogadores.getJogadores())
 
         print("\n\n**************\nE o vencedor foi:")
-        sleepLineBreak()
+        Delay.sleepLineBreak()
         print(vencedor.Nome,
               "! Que comeu", vencedor.Cérebros, "Cérebros !!!")
-        sleepLineBreak()
+        Delay.sleepLineBreak()
         print("Parabéns, você é o/a melhor Zumbi !!!\n\n**************")
-        sleepLineBreak()
-        self._finalizarSystem()
+        Delay.sleepLineBreak()
+        self._close()
 
     #Função inicial, da ação a escolha do usuário entre adicionar ou listar jogadores, começar a partida (é necessário ao menos 2 jogadores) ou sair.
     def menu(self):
@@ -78,9 +90,9 @@ class Menu:
             if(decisao == 1):
                 self.__jogadores.adicionarJogadores()
             elif(decisao == 2):
-                sleepLineBreak(0.6)
+                Delay.sleepLineBreak(0.6)
                 self.__jogadores.listarJogadores()
-                sleepLineBreak()
+                Delay.sleepLineBreak()
             elif(decisao == 3):
                 if(len(self.__jogadores.getJogadores()) <= 1):
                     print('\n-------------------------- ATENÇÃO --------------------------')
@@ -92,10 +104,12 @@ class Menu:
                         print('Jogador:', jogador.Nome, ' | ' 'Cérebros:', jogador.Cérebros)
                     self.__iniciarJogo()
                     break
+            elif(decisao == 4):
+                Delay.sleepLineBreak(0.6)
+                self._rules()
             else:
-                self._finalizarSystem()
+                self._close()
                 break
-
 
     #Função que solicita ao usuário a esccolha entre uma das opções de adicionar ou listar jogadores, começar a partida ou sair.
     def __escolherMenu(self):
@@ -106,8 +120,8 @@ class Menu:
         while True:
             try:
                 decisao = int(
-                    input('\n----- Menu Inicial ----- \n1 - Adicionar jogadores\n2 - Listar jogadores da partida\n3 - Jogar\n4 - Sair\n\nQuero a opção número:'))
-                if(decisao >= 1 and decisao <= 4):
+                    input('\n----- Menu Inicial ----- \n1 - Adicionar jogadores\n2 - Listar jogadores da partida\n3 - Jogar\n4 - Regras\n5 - Sair\n\nQuero a opção número:'))
+                if(decisao >= 1 and decisao <= 5):
                     return decisao
                 else:
                     print('\n\n------------- ATENÇÃO -------------')
@@ -234,6 +248,7 @@ class Pontuacao:
     """
     Classe Pontuação;
     """
+    #Função construtor python.
     def __init__(self):
         self.__pontuacaoTemp = {
             "Cérebros": 0,
@@ -415,7 +430,6 @@ class Copo:
         return selecionados
 
     #        Função que rola os dados e os armazena nas listas de dadosRepetir ou dadosUtilizar dependendo do que foi rolado.
-
     def jogarDados(self, dados):
         """
         Função que rola os dados e os armazena nas listas de dadosRepetir ou dadosUtilizar dependendo do que foi rolado.
@@ -430,8 +444,8 @@ class Copo:
                 self.setDadosRepetir(dado)
             else:
                 self.setDadosUtilizados(dado)
-        sleepLineBreak()
-        return rolagem
+        Delay.sleepLineBreak()
+        return rolagem       
 class Rodada:
     """
     Classe rodada;
@@ -447,7 +461,7 @@ class Rodada:
         :return: retorna uma lista de dados com suas respectivas rolagens
         """
         selecionados = self.__copo.selecionarDados()
-        sleepLineBreak()
+        Delay.sleepLineBreak()
         rolagem = self.__copo.jogarDados(
             selecionados)
         return rolagem
@@ -510,7 +524,7 @@ class Rodada:
             else:
                 pontuacao.pontuarRodada(
                     jogador, jogadores)
-                sleepLineBreak()
+                Delay.sleepLineBreak()
                 break
 
     #Função que possuí a lógica de cada rodada, percorre a lista de jogadores indicando o turno de cada um.
@@ -520,7 +534,7 @@ class Rodada:
         :vencedor: valor opcional para lista de jogadores que empataram.
         """
         print("\nNOVA RODADA!")
-        sleepLineBreak()
+        Delay.sleepLineBreak()
         for jogador in (vencedores or self.__jogadores):
             pontuacao = Pontuacao()
             self.__copo.criarCopo()
@@ -528,7 +542,7 @@ class Rodada:
                   "que tem pontuação:", jogador.Cérebros)
             input('\nAperte qualquer tecla para jogar...\n')
             selecionados = self.__copo.selecionarDados()
-            sleepLineBreak()
+            Delay.sleepLineBreak()
             rolagem = self.__copo.jogarDados(selecionados)
             for dado in rolagem:
                 pontuacao.pontuacaoTemporaria(dado[1])
@@ -573,6 +587,6 @@ class Rodada:
     pass
 
 #Inicio do Programa
-print("\nBem-vindo ao ZombiDice, divirta-se!")
+Startmsg
 menu = Menu()
 menu.menu()
